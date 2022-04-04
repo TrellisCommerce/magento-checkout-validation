@@ -18,7 +18,8 @@ class ValidateConfigurableProductQuantity implements ObserverInterface
 
     /**
      * ValidateConfigurableProductMnQuantity constructor.
-     * @param Helper $helper
+     *
+     * @param Helper           $helper
      * @param ManagerInterface $messageManager
      */
     public function __construct(
@@ -46,7 +47,6 @@ class ValidateConfigurableProductQuantity implements ObserverInterface
                 $response = $controller->getResponse();
                 $response->setRedirect($url);
             }
-
         }
     }
 }

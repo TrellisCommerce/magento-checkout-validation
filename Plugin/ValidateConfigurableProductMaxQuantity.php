@@ -15,6 +15,7 @@ class ValidateConfigurableProductMaxQuantity
 
     /**
      * ValidateConfigurableProductQuantity constructor.
+     *
      * @param Helper $helper
      */
     public function __construct(
@@ -26,10 +27,11 @@ class ValidateConfigurableProductMaxQuantity
     /**
      * Validates if the requested quantity is greater than the accepted before adding it to the quote
      *
-     * @param Quote $quote
+     * @param Quote   $quote
      * @param Product $product
-     * @param null $request
-     * @param string $processMode
+     * @param null    $request
+     * @param string  $processMode
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -39,7 +41,8 @@ class ValidateConfigurableProductMaxQuantity
         $request = null,
         $processMode = \Magento\Catalog\Model\Product\Type\AbstractType::PROCESS_MODE_FULL
     ) {
-        if ($this->helper->getConfig(Helper::PATH_CART_LIMIT_CART_ENABLED) && $product->getTypeId() == Configurable::TYPE_CODE) {
+        if ($this->helper->getConfig(Helper::PATH_CART_LIMIT_CART_ENABLED) && $product->getTypeId(
+            ) == Configurable::TYPE_CODE) {
             $qty = 1;
 
             if (is_object($request)) {

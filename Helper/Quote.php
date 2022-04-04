@@ -17,6 +17,7 @@ class Quote extends Data
 
     /**
      * Quote constructor.
+     *
      * @param Session $checkoutSession
      * @param Context $context
      */
@@ -40,6 +41,7 @@ class Quote extends Data
 
     /**
      * @param $product
+     *
      * @return mixed
      */
     public function getStockItem($product)
@@ -49,8 +51,9 @@ class Quote extends Data
 
     /**
      * @param ProductInterface $product
-     * @param int $qty
-     * @param QuoteModel $quote
+     * @param int              $qty
+     * @param QuoteModel       $quote
+     *
      * @throws LocalizedException
      */
     public function validateMaxQty($product, $qty = 0, $quote = null)
@@ -59,17 +62,18 @@ class Quote extends Data
         $requestedQty = $this->getCurrentQtyForSameProduct($product, $quote) + $qty;
         $stock = $this->getStockItem($product);
         if ($requestedQty > $stock->getData('max_sale_qty')) {
-            throw new LocalizedException(__(
-                $this->getConfig(Helper::PATH_CART_LIMIT_CART_MAX_ERROR),
-                [$product->getSku(), number_format($stock->getData('max_sale_qty'))]
-            ));
+            throw new LocalizedException(
+                __($this->getConfig(Helper::PATH_CART_LIMIT_CART_MAX_ERROR),
+                    [$product->getSku(), number_format($stock->getData('max_sale_qty'))])
+            );
         }
     }
 
     /**
      * @param ProductInterface $product
-     * @param int $qty
-     * @param QuoteModel $quote
+     * @param int              $qty
+     * @param QuoteModel       $quote
+     *
      * @throws LocalizedException
      */
     public function validateMinQty($product, $qty = 0, $quote = null)
@@ -78,15 +82,16 @@ class Quote extends Data
         $requestedQty = $this->getCurrentQtyForSameProduct($product, $quote) + $qty;
         $stock = $this->getStockItem($product);
         if ($requestedQty < $stock->getData('min_sale_qty')) {
-            throw new LocalizedException(__(
-                $this->getConfig(Helper::PATH_CART_LIMIT_CART_MIN_ERROR),
-                [$product->getSku(), number_format($stock->getData('min_sale_qty'))]
-            ));
+            throw new LocalizedException(
+                __($this->getConfig(Helper::PATH_CART_LIMIT_CART_MIN_ERROR),
+                    [$product->getSku(), number_format($stock->getData('min_sale_qty'))])
+            );
         }
     }
 
     /**
      * @param QuoteModel|null $quote
+     *
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
@@ -104,7 +109,8 @@ class Quote extends Data
 
     /**
      * @param ProductInterface $product
-     * @param QuoteModel $quote
+     * @param QuoteModel       $quote
+     *
      * @return int
      */
     public function getCurrentQtyForSameProduct($product, $quote): int
@@ -117,6 +123,7 @@ class Quote extends Data
                 $currentQty += $item->getQty();
             }
         }
+
         return $currentQty;
     }
 }

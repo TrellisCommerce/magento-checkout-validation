@@ -15,6 +15,7 @@ class RemoveDiscountCodeFromCart implements ObserverInterface
 
     /**
      * RemoveDiscountCodeFromCart constructor.
+     *
      * @param Helper $helper
      */
     public function __construct(

@@ -23,7 +23,8 @@ class Data extends AbstractHelper
 
     /**
      * @param string $xmlPath
-     * @param mixed $storeCode
+     * @param mixed  $storeCode
+     *
      * @return mixed
      */
     public function getConfig($xmlPath, $storeCode = null)
@@ -33,6 +34,7 @@ class Data extends AbstractHelper
 
     /**
      * @param string|null $storeCode
+     *
      * @return mixed
      */
     public function isModuleEnabled($storeCode = null)
@@ -42,6 +44,7 @@ class Data extends AbstractHelper
 
     /**
      * @param null $storeCode
+     *
      * @return bool
      */
     public function removeDiscountCode($storeCode = null)
@@ -61,7 +64,7 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getUrl($url, $params = array())
+    public function getUrl($url, $params = [])
     {
         return $this->_getUrl($url, $params);
     }
