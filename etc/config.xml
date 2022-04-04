@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <trellis_checkoutvalidation>
+            <general>
+                <status>1</status>
+            </general>
+            <cart>
+                <limit_qty_max_error>The requested quantity for %1 exceeds the maximum allowed per shopping cart of %2.</limit_qty_max_error>
+                <limit_qty_min_error>The requested quantity for %1 does not meet the minimum required quantity of %2.</limit_qty_min_error>
+            </cart>
+        </trellis_checkoutvalidation>
+    </default>
+</config>

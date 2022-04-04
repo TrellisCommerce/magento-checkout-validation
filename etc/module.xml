@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    Stran
+ * @package     OrderApproval
+ * @copyright   Copyright (c) 2017 Classy Llama
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Trellis_CheckoutValidation" setup_version="1.0.0">
+    </module>
+</config>

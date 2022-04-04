@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="trellis" translate="label" sortOrder="10000">
+            <label>Trellis</label>
+        </tab>
+        <section id="trellis_checkoutvalidation" translate="label" sortOrder="1200" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Checkout Validation</label>
+            <tab>trellis</tab>
+            <resource>Trellis_CheckoutCmsContent::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Checkout Validation</label>
+                <field id="status" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enabled?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Defines if the custom validations on checkout page addresses forms will be enabled or not.
+                    </comment>
+                </field>
+                <field id="apply_discount_code" translate="label" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Remove "Apply Discount Code"</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="trellis_checkoutvalidation/general/status">1</field>
+                    </depends>
+                    <comment>Toggles visibility of Discount Code on Checkout and Cart pages..</comment>
+                </field>
+            </group>
+            <group id="cart" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Shopping Cart</label>
+                <field id="limit_qty_enabled" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Limit Qty?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Limit Max/Min Qty per configurable product. This will allow you to limit Configurable Products qty, which Magento does not allow by default.</comment>
+                </field>
+                <field id="limit_qty_max_error" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Limit Max Qty Error Message</label>
+                </field>
+                <field id="limit_qty_min_error" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Limit Min Qty Error Message</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
