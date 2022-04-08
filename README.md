@@ -1,6 +1,12 @@
-## Trellis CheckoutValidation
+# Trellis CheckoutValidation
 
 This module adds a set of validations to the forms on shipping and billing step of Checkout Page using an after Plugin.
+
+## Installation
+TODO: Insert blurb about how to install via composer from the Trellis Satis repo.
+
+
+## Configuration
 The following are some of the validations included:
 
 ### Shipping Address
