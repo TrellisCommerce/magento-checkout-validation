@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trellis\CheckoutValidation\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -64,7 +66,7 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getUrl($url, $params = [])
+    public function getUrl($url, array $params = [])
     {
         return $this->_getUrl($url, $params);
     }

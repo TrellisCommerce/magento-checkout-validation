@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trellis\CheckoutValidation\Block;
 
 use Trellis\CheckoutValidation\Helper\Data as HelperData;
@@ -11,22 +13,25 @@ class LayoutProcessor
      */
     protected $_helperData;
 
+    /**
+     * @param HelperData $helperData
+     */
     public function __construct(
         HelperData $helperData
-    )
-    {
+    ) {
         $this->_helperData = $helperData;
     }
 
     /**
      * @param \Magento\Checkout\Block\Checkout\LayoutProcessor $subject
-     * @param array $jsLayout
+     * @param array                                            $jsLayout
+     *
      * @return array
      */
     public function afterProcess(
-        \Magento\Checkout\Block\Checkout\LayoutProcessor $subject, array $jsLayout
-    )
-    {
+        \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
+        array $jsLayout
+    ) {
         if ($this->_helperData->isModuleEnabled()) {
             //shipping address is required and each street can have max 40 characters each
             $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']['children']
@@ -157,10 +162,10 @@ class LayoutProcessor
             ['payment']['children']['payments-list']['children'];
 
             foreach ($paymentsList as $paymentMethod => $payment) {
-
-                if (isset($jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
-                    ['payment']['children']['payments-list']['children'][$paymentMethod]['children']['form-fields'])) {
-
+                if (isset(
+                    $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                    ['payment']['children']['payments-list']['children'][$paymentMethod]['children']['form-fields']
+                )) {
                     $prefix = '';
                     if (isset($payment['dataScopePrefix'])) {
                         $prefix = $payment['dataScopePrefix'];
@@ -185,7 +190,11 @@ class LayoutProcessor
                                 ],
                                 'dataScope' => '0',
                                 'provider' => 'checkoutProvider',
-                                'validation' => ['required-entry' => true, "min_text_len‌​gth" => 1, "max_text_length" => 40],
+                                'validation' => [
+                                    'required-entry' => true,
+                                    "min_text_len‌​gth" => 1,
+                                    "max_text_length" => 40
+                                ],
                             ],
                             [
                                 'component' => 'Magento_Ui/js/form/element/abstract',
@@ -196,7 +205,11 @@ class LayoutProcessor
                                 ],
                                 'dataScope' => '1',
                                 'provider' => 'checkoutProvider',
-                                'validation' => ['required-entry' => false, "min_text_len‌​gth" => 1, "max_text_length" => 40],
+                                'validation' => [
+                                    'required-entry' => false,
+                                    "min_text_len‌​gth" => 1,
+                                    "max_text_length" => 40
+                                ],
                             ]
                         ]
                     ];
@@ -308,18 +321,17 @@ class LayoutProcessor
                         ],
                         'validation' => ['required-entry' => true, 'validate-zip-us' => true]
                     ];
-
                 }
             }
 
-            if (
-                $this->_helperData->removeDiscountCode() && isset(
+            if ($this->_helperData->removeDiscountCode() && isset(
                     $jsLayout["components"]["checkout"]["children"]["steps"]["children"]["billing-step"]["children"]
                     ["payment"]["children"]["afterMethods"]["children"]["discount"]
-                )
-            ) {
-                unset($jsLayout["components"]["checkout"]["children"]["steps"]["children"]["billing-step"]["children"]
-                    ["payment"]["children"]["afterMethods"]["children"]["discount"]);
+                )) {
+                unset(
+                    $jsLayout["components"]["checkout"]["children"]["steps"]["children"]["billing-step"]["children"]
+                    ["payment"]["children"]["afterMethods"]["children"]["discount"]
+                );
             }
         }
 

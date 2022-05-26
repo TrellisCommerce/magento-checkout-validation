@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trellis\CheckoutValidation\Helper;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -7,6 +9,7 @@ use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Quote\Model\Quote as QuoteModel;
 use Trellis\CheckoutValidation\Helper\Data as Helper;
 
@@ -15,23 +18,28 @@ class Quote extends Data
     /** @var Session */
     protected $checkoutSession;
 
+    protected ManagerInterface $manager;
+
     /**
      * Quote constructor.
      *
-     * @param Session $checkoutSession
-     * @param Context $context
+     * @param Session          $checkoutSession
+     * @param Context          $context
+     * @param ManagerInterface $manager
      */
     public function __construct(
         Session $checkoutSession,
-        Context $context
+        Context $context,
+        ManagerInterface $manager
     ) {
         $this->checkoutSession = $checkoutSession;
         parent::__construct($context);
+        $this->manager = $manager;
     }
 
     /**
      * @return QuoteModel
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      * @throws NoSuchEntityException
      */
     public function getCurrentQuote()
@@ -61,11 +69,16 @@ class Quote extends Data
         $quote = $quote ?: $this->getCurrentQuote();
         $requestedQty = $this->getCurrentQtyForSameProduct($product, $quote) + $qty;
         $stock = $this->getStockItem($product);
-        if ($requestedQty > $stock->getData('max_sale_qty')) {
-            throw new LocalizedException(
-                __($this->getConfig(Helper::PATH_CART_LIMIT_CART_MAX_ERROR),
-                    [$product->getSku(), number_format($stock->getData('max_sale_qty'))])
+        $maxSaleQty = (float)$stock->getData('max_sale_qty');
+
+        if ($requestedQty > $maxSaleQty) {
+            $errorMessage =     __(
+                $this->getConfig(Helper::PATH_CART_LIMIT_CART_MAX_ERROR),
+                [$product->getSku(), number_format($maxSaleQty)]
             );
+
+            $this->manager->addErrorMessage($errorMessage);
+            throw new LocalizedException($errorMessage);
         }
     }
 
@@ -81,11 +94,15 @@ class Quote extends Data
         $quote = $quote ?: $this->getCurrentQuote();
         $requestedQty = $this->getCurrentQtyForSameProduct($product, $quote) + $qty;
         $stock = $this->getStockItem($product);
-        if ($requestedQty < $stock->getData('min_sale_qty')) {
-            throw new LocalizedException(
-                __($this->getConfig(Helper::PATH_CART_LIMIT_CART_MIN_ERROR),
-                    [$product->getSku(), number_format($stock->getData('min_sale_qty'))])
+        $minSaleQty = (float)$stock->getData('min_sale_qty');
+
+        if ($requestedQty < $minSaleQty) {
+            $errorMessage =      __(
+                $this->getConfig(Helper::PATH_CART_LIMIT_CART_MIN_ERROR),
+                [$product->getSku(), number_format($minSaleQty)]
             );
+            $this->manager->addErrorMessage($errorMessage);
+            throw new LocalizedException($errorMessage);
         }
     }
 
@@ -111,9 +128,9 @@ class Quote extends Data
      * @param ProductInterface $product
      * @param QuoteModel       $quote
      *
-     * @return int
+     * @return mixed
      */
-    public function getCurrentQtyForSameProduct($product, $quote): int
+    public function getCurrentQtyForSameProduct($product, $quote)
     {
         $items = $quote->getAllItems();
         $currentQty = 0;

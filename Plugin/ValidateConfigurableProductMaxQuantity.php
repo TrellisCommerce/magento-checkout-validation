@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trellis\CheckoutValidation\Plugin;
 
 use Magento\Catalog\Model\Product;
@@ -54,6 +56,7 @@ class ValidateConfigurableProductMaxQuantity
             }
 
             $this->helper->validateMaxQty($product, $qty, $quote);
+            $this->helper->validateMinQty($product, $qty, $quote);
         }
 
         return [$product, $request, $processMode];

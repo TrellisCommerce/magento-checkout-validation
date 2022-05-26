@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Trellis\CheckoutValidation\Plugin;
 
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
