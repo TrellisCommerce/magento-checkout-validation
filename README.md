@@ -12,7 +12,6 @@ This extension makes several small modifications to the native Magento checkout 
 ## Installation Instructions
 Follow the instructions to install this extension using Composer.
 ```
-composer config repositories.trellis/module-checkout-validation git git@github.com:TrellisCommerce/magento-checkout-validation.git
 composer require trellis/module-checkout-validation
 bin/magento module:enable --clear-static-content Trellis_CheckoutValidation
 bin/magento setup:upgrade
